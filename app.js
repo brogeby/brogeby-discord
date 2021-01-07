@@ -1,10 +1,11 @@
 require('dotenv').config()
-const Discord = require('discjord.js')
+const Discord = require('discord.js')
 const fs = require('fs')
 
 const client = new Discord.Client({
   partials: ['MESSAGE', 'REACTION'],
 })
+client.commands = new Discord.Collection()
 
 // Reads all the filenames ending with .js in /commands as a command
 const commandFiles = fs.readdirSync('./commands/').filter((file) => file.endsWith('.js'))
