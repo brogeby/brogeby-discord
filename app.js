@@ -1,7 +1,6 @@
 require('dotenv').config()
 const Discord = require('discord.js')
 const fs = require('fs')
-const roleHandler = require('./features/roleHandler')
 
 const client = new Discord.Client({
   partials: ['MESSAGE', 'REACTION'],
@@ -40,8 +39,6 @@ client.on('message', (message) => {
 })
 
 // React to a specific message with an emoji and get assigned to a specific role
-// roleHandler.getRole()
-// roleHandler.removeRole()
 const moviesAndSeries = '797468412800139294'
 const gaming = '796769198088650753'
 const marvel = '797455929146081311'
@@ -54,13 +51,10 @@ const newMember = '796779988258258996'
 client.on('messageReactionAdd', (reaction, user) => {
   const { name } = reaction.emoji
   const member = reaction.message.guild.members.cache.get(user.id)
+
   if (reaction.message.id === '796786003305300079') {
     //To copy an emoji from discord, type "\" followed by the emoji, ex \:apple:, then copy and paste it
     switch (name) {
-      case '👍':
-        member.roles.add(member)
-        member.roles.remove(newMember)
-        break
       case '🎥':
         member.roles.add(moviesAndSeries)
         break
@@ -86,17 +80,9 @@ client.on('messageReactionAdd', (reaction, user) => {
 client.on('messageReactionRemove', (reaction, user) => {
   const { name } = reaction.emoji
   const member = reaction.message.guild.members.cache.get(user.id)
+
   if (reaction.message.id === '796786003305300079') {
     switch (name) {
-      case '👍':
-        member.roles.add(newMember)
-        member.roles.remove(member)
-        member.roles.remove(moviesAndSeries)
-        member.roles.remove(gaming)
-        member.roles.remove(marvel)
-        member.roles.remove(dc)
-        member.roles.remove(genshinImpact)
-        member.roles.remove(pubg)
       case '🎥':
         member.roles.remove(moviesAndSeries)
         break
