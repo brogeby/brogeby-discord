@@ -1,50 +1,44 @@
-require('dotenv').config()
+const loadCommands = require('./load-commands')
 
 module.exports = {
-  name: 'help',
-  description: 'List all of my commands or info about a specific command.',
-  aliases: ['commands'],
-  usage: '[command name]',
-  cooldown: 5,
-  execute(message, args) {
-    const data = []
-    const { commands } = message.client
+  commands: ['help', 'h'],
+  description: "Describes all of this bot's commands",
+  callback: (message, arguments, text) => {
+    let reply = 'I am the almighty bot, here are my supported commands:\n\n'
 
-    if (!args.length) {
-      data.push("Here's a list of all my commands:")
-      data.push(commands.map((command) => command.name).join('\n'))
-      data.push(
-        `\nYou can send \`${process.env.PREFIX}help [command name]\` to get info on a specific command!`
-      )
+    const commands = loadCommands()
 
-      return message.author
-        .send(data, { split: true })
-        .then(() => {
-          if (message.channel.type === 'dm') return
-          message.reply("I've sent you a DM with all my commands!")
-        })
-        .catch((error) => {
-          console.error(`Could not send help DM to ${message.author.tag}.\n`, error)
-          message.reply("it seems like I can't DM you! Do you have DMs disabled?")
-        })
+    for (const command of commands) {
+      // Check for permissions
+      let permissions = command.permission
+
+      if (permissions) {
+        let hasPermission = true
+        if (typeof permissions === 'string') {
+          permissions = [permissions]
+        }
+
+        for (const permission of permissions) {
+          if (!message.member.hasPermission(permission)) {
+            hasPermission = false
+            break
+          }
+        }
+
+        if (!hasPermission) {
+          continue
+        }
+      }
+
+      // Format the text
+      const mainCommand =
+        typeof command.commands === 'string' ? command.commands : command.commands[0]
+      const args = command.expectedArgs ? ` ${command.expectedArgs}` : ''
+      const { description } = command
+
+      reply += `**${process.env.PREFIX}${mainCommand}${args}** = ${description}\n`
     }
 
-    const name = args[0].toLowerCase()
-    const command =
-      commands.get(name) || commands.find((c) => c.aliases && c.aliases.includes(name))
-
-    if (!command) {
-      return message.reply("that's not a valid command!")
-    }
-
-    data.push(`**Name:** ${command.name}`)
-
-    if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`)
-    if (command.description) data.push(`**Description:** ${command.description}`)
-    if (command.usage) data.push(`**Usage:** ${process.env.PREFIX}${command.name} ${command.usage}`)
-
-    data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`)
-
-    message.channel.send(data, { split: true })
+    message.channel.send(reply)
   },
 }
