@@ -1,0 +1,17 @@
+Create a new command by adding and changing the boilerplate below. Remove any line if it's not being used.
+
+All commands will be automaticly registered when they're added to the "commands" folder in root.
+Features such as client.on() are not commands and should be placed inside the "features" folder in root.
+
+module.exports = {
+    commands: ['help', 'h', 'commands'],
+    description: 'Returns a list with all the commands to the author',
+    expectedArgs: '<Target user's @> <The role name>',
+    permissionError: 'You do not have permission to run this command.',
+    minArgs: 1,
+    maxArgs: 4,
+    permissions: 'KICK_MEMBERS',
+    requiredRoles: 'moderator',
+    callback: (message, arguments, text) => {
+  }
+}
