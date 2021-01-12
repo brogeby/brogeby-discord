@@ -39,6 +39,8 @@ module.exports = {
       reply += `**${process.env.PREFIX}${mainCommand}${args}** = ${description}\n`
     }
 
-    message.channel.send(reply)
+    message.author.send(reply)
+    if (message.channel.type === 'dm') return
+    message.channel.send(`${message.author.username}, I've sent you a DM with all my commands!`)
   },
 }
