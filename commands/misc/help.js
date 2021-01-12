@@ -1,7 +1,7 @@
 const loadCommands = require('../load-commands')
 
 module.exports = {
-  commands: ['help', 'h'],
+  commands: ['help', 'h', 'commands'],
   description: "Describes all of this bot's commands",
   minArgs: 0,
   maxArgs: 0,
