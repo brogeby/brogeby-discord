@@ -1,8 +1,10 @@
-const loadCommands = require('./load-commands')
+const loadCommands = require('../load-commands')
 
 module.exports = {
   commands: ['help', 'h'],
   description: "Describes all of this bot's commands",
+  minArgs: 0,
+  maxArgs: 0,
   callback: (message, arguments, text) => {
     let reply = 'I am the almighty bot, here are my supported commands:\n\n'
 
