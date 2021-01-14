@@ -16,11 +16,12 @@ module.exports = {
       )
       .then((res) => {
         const latestNews = res.data.appnews.newsitems[0]
+        console.log(latestNews.contents)
 
         const embed = new Discord.MessageEmbed()
           .setTitle(latestNews.title)
           .setURL(latestNews.url)
-          .addFields({ name: latestNews.feedlabel, value: latestNews.url })
+          .addFields({ name: latestNews.feedlabel, value: latestNews.contents })
         message.channel.send(embed)
       })
       .catch((err) => console.error(err))
