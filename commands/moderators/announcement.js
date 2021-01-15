@@ -3,6 +3,8 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
   commands: ['announcement', 'announce'],
   description: 'Returns an embed with the desired information',
+  permission: 'ADMINISTRATORS',
+
   callback: (message, arguments, text) => {
     if (arguments.length > 0) {
       let content = arguments.join(' ')
