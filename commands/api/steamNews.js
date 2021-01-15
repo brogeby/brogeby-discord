@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const axios = require('axios')
 
 module.exports = {
-  commands: 'steam',
+  commands: 'steam-news',
   description: 'Returns the latest news for the desired game from Steam!',
   minArgs: 1,
   maxArgs: 1,
