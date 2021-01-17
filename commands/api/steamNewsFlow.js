@@ -23,24 +23,20 @@ module.exports = {
         .then((res) => {
           latestNews = res.data.appnews.newsitems[0]
         })
-        .then(message.channel.messages.fetch({ limit: 1 }))
+        .then(message.channel.bulkDelete(3, true))
         .then((messages) => {
-          console.log(`Message content: ${message.content}`)
-          console.log(`gid: ${latestNews.gid}`)
-          if (message.author.bot) {
-            // This line should be changed to something like, if (message.content.includes(latestNews.gid)), current statement is just for testing
-            message.channel.send("You're all up to date!")
-          } else {
-            const embed = new Discord.MessageEmbed()
-              .setTitle(latestNews.title)
-              .setURL(latestNews.url)
-              .addFields({ name: latestNews.feedlabel, value: latestNews.contents })
-              .setFooter(latestNews.gid)
-            message.channel.send(embed)
-          }
-          // console.log(embed.footer.text)
+          const unixTimeCreated = latestNews.date
+          const createdAt = new Date(unixTimeCreated * 1000)
+          const embed = new Discord.MessageEmbed()
+            .setTitle(latestNews.title)
+            .setURL(latestNews.url)
+            .addFields({ name: latestNews.feedlabel, value: latestNews.contents })
+            .addFields({ name: 'Date', value: createdAt, inline: true })
+            .addFields({ name: 'Post ID', value: latestNews.gid, inline: true })
+            .setFooter(`Game ID: ${latestNews.appid}`)
+          message.channel.send(embed)
         })
         .catch((err) => console.error(err))
-    }, 2000)
+    }, 1000 * 86400)
   },
 }
