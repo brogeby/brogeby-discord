@@ -11,7 +11,7 @@ module.exports = (client) => {
     const { name } = reaction.emoji
     const member = reaction.message.guild.members.cache.get(user.id)
 
-    if (reaction.message.id === '799267134277812264') {
+    if (reaction.message.id === '799637631188861010') {
       //To copy an emoji from discord, type "\" followed by the emoji, ex \:apple:, then copy and paste it
       switch (name) {
         case '🎥':
@@ -40,7 +40,7 @@ module.exports = (client) => {
     const { name } = reaction.emoji
     const member = reaction.message.guild.members.cache.get(user.id)
 
-    if (reaction.message.id === '799267134277812264') {
+    if (reaction.message.id === '799637631188861010') {
       switch (name) {
         case '🎥':
           member.roles.remove(moviesAndSeries)
