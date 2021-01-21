@@ -38,6 +38,6 @@ module.exports = {
           console.log('New message has been sent')
         })
         .catch((err) => console.error(err))
-    }, 3000)
+    }, 1000 * 86400)
   },
 }
