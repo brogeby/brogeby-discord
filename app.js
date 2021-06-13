@@ -9,7 +9,7 @@ const loadFeatures = require('./features/load-features')
 require('events').EventEmitter.defaultMaxListeners = 20
 
 client.on('ready', async () => {
-  console.log('The client is ready!')
+  console.log('The client is a n00b!')
   loadCommands(client)
   loadFeatures(client)
 })
